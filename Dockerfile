@@ -1,6 +1,4 @@
-FROM golang:1.22-alpine3.19 AS build_deps
-
-RUN apk add --no-cache git
+FROM golang:1.23.4-alpine as build_deps
 
 WORKDIR /workspace
 
@@ -13,12 +11,15 @@ FROM build_deps AS build
 
 COPY . .
 
-RUN CGO_ENABLED=0 go build -o webhook -ldflags '-w -extldflags "-static"' .
+ENV CGO_ENABLED=0
+ENV GOOS=linux
 
-FROM alpine:3.18
+RUN go build -ldflags '-w -s' -a -installsuffix cgo -o webhook main.go
 
-RUN apk add --no-cache ca-certificates
+FROM scratch
 
-COPY --from=build /workspace/webhook /usr/local/bin/webhook
+COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
-ENTRYPOINT ["webhook"]
+COPY --from=build /workspace/webhook webhook
+
+ENTRYPOINT ["/webhook"]
