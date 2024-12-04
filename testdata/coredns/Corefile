@@ -1,8 +1,0 @@
-.:53 {
-    etcd {
-        stubzones
-        path /skydns
-        endpoint http://etcd:2379
-    }
-    log
-}
