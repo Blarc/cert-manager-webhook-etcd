@@ -1,0 +1,4 @@
+{
+    "etcdEndpoint": "http://localhost:2379",
+    "coreDNSPrefix": "/skydns"
+}

@@ -21,7 +21,7 @@ func TestRunsSuite(t *testing.T) {
 	fixture := acmetest.NewFixture(etcd.NewSolver(),
 		acmetest.SetResolvedZone(zone),
 		acmetest.SetAllowAmbientCredentials(false),
-		acmetest.SetManifestPath("testdata/my-custom-solver"),
+		acmetest.SetManifestPath("testdata/etcd-solver"),
 		acmetest.SetDNSServer("localhost:1053"),
 		acmetest.SetUseAuthoritative(false),
 	)
