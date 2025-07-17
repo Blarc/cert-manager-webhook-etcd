@@ -3,7 +3,6 @@ package etcd
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"github.com/cert-manager/cert-manager/pkg/acme/webhook"
 	"github.com/cert-manager/cert-manager/pkg/acme/webhook/apis/acme/v1alpha1"
 	etcdClientV3 "go.etcd.io/etcd/client/v3"
@@ -31,7 +30,6 @@ func (s *Solver) Present(ch *v1alpha1.ChallengeRequest) error {
 		klog.Errorf("Load configuration error : %v", err)
 		return err
 	}
-
 	klog.Infof("Decoded configuration %v", cfg)
 
 	s.NewEtcdClient(cfg)
@@ -58,12 +56,12 @@ func (s *Solver) Present(ch *v1alpha1.ChallengeRequest) error {
 }
 
 func (s *Solver) CleanUp(ch *v1alpha1.ChallengeRequest) (err error) {
-	fmt.Printf("Cleaning up a TXT record for dns01\n")
+	klog.Infof("Deleting a TXT record: %v", ch.ResolvedFQDN)
 	cfg, err := loadConfig(ch.Config)
 	if err != nil {
 		return err
 	}
-	fmt.Printf("Decoded configuration %v", cfg)
+	klog.Infof("Decoded configuration %v", cfg)
 
 	s.NewEtcdClient(cfg)
 	defer s.etcdClient.Close()
@@ -73,6 +71,7 @@ func (s *Solver) CleanUp(ch *v1alpha1.ChallengeRequest) (err error) {
 	key := cfg.etcdKeyFor(ch.ResolvedFQDN)
 	_, err = s.etcdClient.Delete(ctx, key, etcdClientV3.WithPrefix())
 
+	klog.Infof("Deleted TXT record %v", ch.ResolvedFQDN)
 	return nil
 }
 
