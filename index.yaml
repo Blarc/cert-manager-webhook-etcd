@@ -3,11 +3,11 @@ entries:
   cert-manager-webhook-etcd:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2024-12-04T18:11:13.474734806Z"
+    created: "2025-07-17T18:20:20.885327791Z"
     description: A Helm chart for deploying cert manager webhook for etcd.
-    digest: d1083a1575279e6e4e9b1b1783d1ab5308af977d324cb850d038f28f403ab9be
+    digest: 3e5f11f8e3bbefe955dc8ff42b79d614685154dd7b5e3048c6ee0441d7041463
     name: cert-manager-webhook-etcd
     urls:
     - https://Blarc.github.io/cert-manager-webhook-etcd/cert-manager-webhook-etcd-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-04T18:11:13.474328762Z"
+generated: "2025-07-17T18:20:20.884619629Z"
